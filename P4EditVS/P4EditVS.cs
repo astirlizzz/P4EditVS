@@ -157,6 +157,30 @@ namespace P4EditVS
             }
         }
 
+        public string ServerEncoding
+        {
+            get
+            {
+                OptionPageGrid page = (OptionPageGrid)GetDialogPage(typeof(OptionPageGrid));
+                switch (SelectedWorkspace)
+                {
+                    case 0:
+                        return page.ServerEncoding;
+                    case 1:
+                        return page.ServerEncoding2;
+                    case 2:
+                        return page.ServerEncoding3;
+                    case 3:
+                        return page.ServerEncoding4;
+                    case 4:
+                        return page.ServerEncoding5;
+                    case 5:
+                        return page.ServerEncoding6;
+                }
+                throw new IndexOutOfRangeException();
+            }
+        }
+
         public bool AutoCheckout
         {
             get
@@ -460,7 +484,9 @@ namespace P4EditVS
             else
             {
                 // 
-                return string.Format("-c {0} -u {1} -p {2}", ClientName, UserName, Server);
+                var cmd = string.Format("-c {0} -u {1} -p {2}", ClientName, UserName, Server);
+                if (!string.IsNullOrEmpty(ServerEncoding)) cmd += $" -C {ServerEncoding}";
+                return cmd;
             }
         }
 
@@ -816,6 +842,7 @@ namespace P4EditVS
         private string _userName = "";
         private string _clientName = "";
         private string _server = "";
+        private string _serverEncoding = "";
 
         [Category("Workspace 1")]
         [DisplayName("Perforce User Name")]
@@ -844,9 +871,19 @@ namespace P4EditVS
             set { _server = value.Trim(); }
         }
 
+        [Category("Workspace 1")]
+        [DisplayName("Server encoding")]
+        [Description("If specified, encoding is added to p4 command (-C arg).")]
+        public string ServerEncoding
+        {
+            get { return _serverEncoding; }
+            set { _serverEncoding = value; }
+        }
+
         private string _userName2 = "";
         private string _clientName2 = "";
         private string _server2 = "";
+        private string _serverEncoding2 = "";
 
         [Category("Workspace 2")]
         [DisplayName("Perforce User Name")]
@@ -875,9 +912,19 @@ namespace P4EditVS
             set { _server2 = value.Trim(); }
         }
 
+        [Category("Workspace 2")]
+        [DisplayName("Server encoding")]
+        [Description("If specified, encoding is added to p4 command (-C arg).")]
+        public string ServerEncoding2
+        {
+            get { return _serverEncoding2; }
+            set { _serverEncoding2 = value; }
+        }
+
         private string _userName3 = "";
         private string _clientName3 = "";
         private string _server3 = "";
+        private string _serverEncoding3 = "";
 
         [Category("Workspace 3")]
         [DisplayName("Perforce User Name")]
@@ -906,9 +953,19 @@ namespace P4EditVS
             set { _server3 = value.Trim(); }
         }
 
+        [Category("Workspace 3")]
+        [DisplayName("Server encoding")]
+        [Description("If specified, encoding is added to p4 command (-C arg).")]
+        public string ServerEncoding3
+        {
+            get { return _serverEncoding3; }
+            set { _serverEncoding3 = value; }
+        }
+
         private string _userName4 = "";
         private string _clientName4 = "";
         private string _server4 = "";
+        private string _serverEncoding4 = "";
 
         [Category("Workspace 4")]
         [DisplayName("Perforce User Name")]
@@ -937,9 +994,19 @@ namespace P4EditVS
             set { _server4 = value.Trim(); }
         }
 
+        [Category("Workspace 4")]
+        [DisplayName("Server encoding")]
+        [Description("If specified, encoding is added to p4 command (-C arg).")]
+        public string ServerEncoding4
+        {
+            get { return _serverEncoding4; }
+            set { _serverEncoding4 = value; }
+        }
+
         private string _userName5 = "";
         private string _clientName5 = "";
         private string _server5 = "";
+        private string _serverEncoding5 = "";
 
         [Category("Workspace 5")]
         [DisplayName("Perforce User Name")]
@@ -968,9 +1035,19 @@ namespace P4EditVS
             set { _server5 = value.Trim(); }
         }
 
+        [Category("Workspace 5")]
+        [DisplayName("Use server encoding")]
+        [Description("If specified, encoding is added to p4 command (-C arg).")]
+        public string ServerEncoding5
+        {
+            get { return _serverEncoding5; }
+            set { _serverEncoding5 = value; }
+        }
+
         private string _userName6 = "";
         private string _clientName6 = "";
         private string _server6 = "";
+        private string _serverEncoding6 = "";
 
         [Category("Workspace 6")]
         [DisplayName("Perforce User Name")]
@@ -997,6 +1074,15 @@ namespace P4EditVS
         {
             get { return _server6; }
             set { _server6 = value.Trim(); }
+        }
+
+        [Category("Workspace 6")]
+        [DisplayName("Use server encoding")]
+        [Description("If specified, encoding is added to p4 command (-C arg).")]
+        public string ServerEncoding6
+        {
+            get { return _serverEncoding6; }
+            set { _serverEncoding6 = value; }
         }
 
     }
